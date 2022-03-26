@@ -19,6 +19,10 @@ sudo git clone https://github.com/h5bp/server-configs-nginx.git nginx
 # Copy some necessary files such as php fastcgi stuff from old location
 sudo cp -R nginx-previous/snippets nginx-previous/fastcgi.conf ./nginx
 
+# nginx rate limiting configuration
+echo "limit_req_zone $binary_remote_addr zone=myzone:10m rate=5r/s;" \
+    | sudo tee /etc/nginx/conf.d/rate-limiting.conf
+
 # Install 7G Firewall
 cd ~
 wget -O 7g.zip https://perishablepress.com/downloads/18332/
