@@ -8,7 +8,7 @@
 # https://gist.githubusercontent.com/tricarte/8c4595ef50649a91e2ca6462c27f2d42/raw/9bf129358d4f9590ceb531e904216a3c80cdd7de/example.com.conf -O $HOME/example.com.conf
 
 set -eo pipefail # Exit when a command and any command in a pipe fails
-
+# TODO: check internet connection
 # Install server-configs-nginx
 sudo systemctl stop nginx
 cd /etc || exit
@@ -20,14 +20,14 @@ sudo git clone https://github.com/h5bp/server-configs-nginx.git nginx
 sudo cp -R nginx-previous/snippets nginx-previous/fastcgi.conf ./nginx
 
 # nginx rate limiting configuration
-echo "limit_req_zone $binary_remote_addr zone=myzone:10m rate=5r/s;" \
+echo "limit_req_zone \$binary_remote_addr zone=myzone:10m rate=5r/s;" \
     | sudo tee /etc/nginx/conf.d/rate-limiting.conf
 
 # Install 7G Firewall
 cd ~
 wget -O 7g.zip https://perishablepress.com/downloads/18332/
 aunpack 7g.zip
-# FIXME: Version may change.
+# FIXME: Check that this files is downloadable at the beginning.
 sudo mkdir /etc/nginx/7g && \
     sudo mv 7g/7G-Firewall-Nginx-v1.5/7g.conf /etc/nginx/7g && \
     sudo mv 7g/7G-Firewall-Nginx-v1.5/7g-firewall.conf /etc/nginx/conf.d
