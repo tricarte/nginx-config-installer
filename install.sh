@@ -19,6 +19,12 @@ sudo git clone https://github.com/h5bp/server-configs-nginx.git nginx
 # Copy some necessary files such as php fastcgi stuff from old location
 sudo cp -R nginx-previous/snippets nginx-previous/fastcgi.conf ./nginx
 
+# Create php-fpm/php-fpm.conf to be included by nginx location block
+sudo mkdir /etc/nginx/php-fpm
+wget -q "https://gist.githubusercontent.com/tricarte/\
+559a7eeeeadf767623e856ef25847a15/raw/php-fpm.conf" \
+    -O "/etc/nginx/php-fpm/php-fpm.conf"
+
 # nginx rate limiting configuration
 echo "limit_req_zone \$binary_remote_addr zone=myzone:10m rate=5r/s;" \
     | sudo tee /etc/nginx/conf.d/rate-limiting.conf
