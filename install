@@ -65,6 +65,7 @@ sudo wget \
 sudo chmod +x /usr/local/sbin/install-ngxblocker
 sudo install-ngxblocker -x
 sudo setup-ngxblocker -x -v /etc/nginx/conf.d -e conf
+# Use just -n if you don't want to send email
 sudo crontab -l \
-    | { cat; echo "30 06 * * * sudo /usr/local/sbin/update-ngxblocker -e ${EMAIL}"; } \
+    | { cat; echo "30 06 * * * /usr/local/sbin/update-ngxblocker -e ${EMAIL}"; } \
     | sudo crontab -
